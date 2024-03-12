@@ -1,39 +1,37 @@
 import {Action, createReducer, on} from '@ngrx/store'
-import * as FeedActions from './tasks.actions'
-import {IFeed} from './tasks.models'
-import {IAuthError} from '../../../../auth/store/auth.models'
+import * as TasksActions from './tasks.actions'
+import {ITask} from "./tasks.models";
 
-export const feedFeatureKey = 'feed'
+export const tasksFeatureKey = 'tasks'
 
 export interface State {
-    data: IFeed | null
-    isLoading: boolean
-    error: IAuthError | null
+    data: ITask[] | null,
+    isLoading: boolean,
+    error: any
 }
 
 export const initialState: State = {
     data: null,
     isLoading: false,
-    error: null,
+    error: null
 }
 
 const reducer = createReducer(
     initialState,
-    on(FeedActions.getFeed, (state) => ({
-        ...state,
+    on(TasksActions.getTasks, (state) => ({
         data: null,
         isLoading: true,
-        error: null,
+        error: null
     })),
-    on(FeedActions.getFeedSuccess, (state, {data}) => ({
+    on(TasksActions.getTasksSuccess, (state, {data}) => ({
+        ...state,
         data: data,
-        isLoading: false,
-        error: null,
+        isLoading: false
     })),
-    on(FeedActions.getFeedFailure, (state, {error}) => ({
+    on(TasksActions.getTasksFailure, (state, {error}) => ({
         ...state,
         isLoading: false,
-        error: error,
+        error: error
     })),
 )
 

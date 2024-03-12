@@ -1,19 +1,24 @@
-import { createSelector } from '@ngrx/store'
-import { IFeedState } from '../types/feed.interface'
+import {createSelector} from '@ngrx/store'
+import {State} from './tasks.reducer'
 
-export const feedFeatureSelector = (state: IFeedState) => state.feed
+export interface ITasksState {
+    tasks: State
+}
 
-export const feedIsLoadingSelector = createSelector(
-	feedFeatureSelector,
-	(state) => state.isLoading,
+
+export const tasksFeatureSelector = (state: ITasksState) => state.tasks
+
+export const tasksIsLoadingSelector = createSelector(
+    tasksFeatureSelector,
+    (state) => state.isLoading,
 )
 
-export const feedDataSelector = createSelector(
-	feedFeatureSelector,
-	(state) => state.data,
+export const tasksDataSelector = createSelector(
+    tasksFeatureSelector,
+    (state) => state.data,
 )
 
-export const feedErrorSelector = createSelector(
-	feedFeatureSelector,
-	(state) => state.error,
+export const tasksErrorSelector = createSelector(
+    tasksFeatureSelector,
+    (state) => state.error,
 )

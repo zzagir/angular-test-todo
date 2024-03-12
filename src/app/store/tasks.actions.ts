@@ -1,17 +1,15 @@
 import {createAction, props} from '@ngrx/store'
-import {IFeed} from './tasks.models'
-import {IAuthError} from '../../../../auth/store/auth.models'
+import {ITask} from "./tasks.models";
 
-export const getFeed = createAction(
-    '[Feed/Get] Get Feed',
-    props<{ url: string }>(),
+export const getTasks = createAction(
+    '[Tasks/Get] Get Tasks'
 )
-export const getFeedSuccess = createAction(
-    '[Feed/Get] Get Feed Success',
-    props<{ data: IFeed }>(),
+export const getTasksSuccess = createAction(
+    '[Tasks/Get] Get Tasks Success',
+    props<{ data: ITask[] }>(),
 )
 
-export const getFeedFailure = createAction(
-    '[Feed/Get] Get Feed Failure',
-    props<{ error: IAuthError }>(),
+export const getTasksFailure = createAction(
+    '[Tasks/Get] Get Tasks Failure',
+    props<{ error: any }>(),
 )
