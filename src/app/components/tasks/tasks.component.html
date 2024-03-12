@@ -1,12 +1,14 @@
+<button (click)="openAddTaskDialog()" mat-raised-button>Добавить задачу</button>
 <div class="container">
   <div class="row">
-    <div class="example-container">
-      <h2>To do</h2>
 
+    <!-- На распределении -->
+    <div class="example-container">
+      <h2>На распределении</h2>
       <div
           #todoList="cdkDropList"
           (cdkDropListDropped)="drop($event)"
-          [cdkDropListConnectedTo]="[doneList]"
+          [cdkDropListConnectedTo]="['atWorkList', 'doneList']"
           [cdkDropListData]="todo"
           cdkDropList
           class="example-list"
@@ -17,13 +19,30 @@
       </div>
     </div>
 
+    <!-- В работе -->
     <div class="example-container">
-      <h2>Done</h2>
+      <h2>В работе</h2>
+      <div
+          #atWorkList="cdkDropList"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListConnectedTo]="['todoList', 'doneList']"
+          [cdkDropListData]="atWork"
+          cdkDropList
+          class="example-list"
+          id="atWorkList">
+        <ng-container *ngFor="let item of atWork; trackBy:itemTrackBy">
+          <div cdkDrag class="example-box">{{item.title}}</div>
+        </ng-container>
+      </div>
+    </div>
 
+    <!-- Готово -->
+    <div class="example-container">
+      <h2>Готово</h2>
       <div
           #doneList="cdkDropList"
           (cdkDropListDropped)="drop($event)"
-          [cdkDropListConnectedTo]="[todoList]"
+          [cdkDropListConnectedTo]="['todoList', 'atWorkList']"
           [cdkDropListData]="done"
           cdkDropList
           class="example-list"
@@ -33,7 +52,6 @@
         </ng-container>
       </div>
     </div>
-
 
   </div>
 </div>

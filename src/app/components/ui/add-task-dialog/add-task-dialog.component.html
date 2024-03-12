@@ -1,0 +1,62 @@
+<h1 mat-dialog-title>Добавить задачу</h1>
+<div mat-dialog-content>
+  <form [formGroup]="taskForm">
+    <mat-form-field>
+      <mat-label>Заголовок</mat-label>
+      <input formControlName="title" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Описание</mat-label>
+      <textarea formControlName="description" matInput></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Срок</mat-label>
+      <input [matDatepicker]="picker" formControlName="deadline" matInput>
+      <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Приоритет</mat-label>
+      <mat-select formControlName="priority">
+        <mat-option value="Низкий">Низкий</mat-option>
+        <mat-option value="Средний">Средний</mat-option>
+        <mat-option value="Высокий">Высокий</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Статус</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="На распределении">На распределении</mat-option>
+        <mat-option value="В работе">В работе</mat-option>
+        <mat-option value="Готово">Готово</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-chip-list">
+      <mat-label>Исполнители</mat-label>
+      <mat-chip-grid #chipGrid aria-label="Enter fruits">
+        <ng-container *ngFor="let performer of performers; let index">
+          <mat-chip-row
+            (edited)="edit(performer, $event)"
+            (removed)="remove(index)"
+            [aria-description]="'press enter to edit ' + performer"
+            [editable]="true">
+            {{performer}}
+            <button [attr.aria-label]="'remove ' + performer" matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        </ng-container>
+
+        <input (matChipInputTokenEnd)="add($event)"
+               [matChipInputAddOnBlur]="addOnBlur"
+               [matChipInputFor]="chipGrid"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               placeholder="Имя Ф.О."/>
+      </mat-chip-grid>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button [mat-dialog-close]="null" mat-button>Отмена</button>
+  <button [disabled]="!taskForm.valid" [mat-dialog-close]="taskForm.value" mat-button>Добавить</button>
+</div>
