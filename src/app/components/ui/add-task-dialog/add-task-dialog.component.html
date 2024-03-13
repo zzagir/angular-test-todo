@@ -11,8 +11,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Срок</mat-label>
-      <input [matDatepicker]="picker" formControlName="deadline" matInput>
-      <mat-hint>MM/DD/YYYY</mat-hint>
+      <input [matDatepicker]="picker" formControlName="deadline" matInput placeholder="MM/DD/YYYY">
       <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>

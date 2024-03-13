@@ -33,6 +33,21 @@ const reducer = createReducer(
         isLoading: false,
         error: error
     })),
+    on(TasksActions.addTask, (state) => ({
+        ...state,
+        isLoading: true,
+        error: null
+    })),
+    on(TasksActions.addTaskSuccess, (state, {data}) => ({
+        ...state,
+        data: [...(state.data || []), data],
+        isLoading: false
+    })),
+    on(TasksActions.addTaskFailure, (state, {error}) => ({
+        ...state,
+        isLoading: false,
+        error: error
+    })),
 )
 
 export function tasksReducer(state: State | undefined, action: Action) {

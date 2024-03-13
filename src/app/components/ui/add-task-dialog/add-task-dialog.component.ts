@@ -87,7 +87,6 @@ export class AddTaskDialogComponent {
     save(): void {
         if (this.taskForm.valid) {
             const formData = {
-                id: new Date().toISOString(),
                 title: this.taskForm.value.title,
                 description: this.taskForm.value.description,
                 deadline: this.taskForm.value.deadline,
