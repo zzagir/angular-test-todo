@@ -1,0 +1,8 @@
+.matdialog::-webkit-scrollbar {
+  display: none;
+}
+
+.matdialog {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

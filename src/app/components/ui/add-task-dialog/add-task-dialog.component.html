@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Добавить задачу</h1>
-<div mat-dialog-content>
+<mat-dialog-content class="matdialog">
   <form [formGroup]="taskForm">
     <mat-form-field>
       <mat-label>Заголовок</mat-label>
@@ -12,6 +12,7 @@
     <mat-form-field>
       <mat-label>Срок</mat-label>
       <input [matDatepicker]="picker" formControlName="deadline" matInput>
+      <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -55,8 +56,11 @@
       </mat-chip-grid>
     </mat-form-field>
   </form>
-</div>
+</mat-dialog-content>
 <div mat-dialog-actions>
-  <button [mat-dialog-close]="null" mat-button>Отмена</button>
-  <button [disabled]="!taskForm.valid" [mat-dialog-close]="taskForm.value" mat-button>Добавить</button>
+  <button (click)="save()" [disabled]="!taskForm.valid" [mat-dialog-close]="taskForm.value" color="primary"
+          mat-raised-button>
+    Добавить
+  </button>
+  <button (click)="cancel()" [mat-dialog-close]="false" mat-button>Отмена</button>
 </div>

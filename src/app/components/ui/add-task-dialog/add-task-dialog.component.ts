@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from "@angular/material/input";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatSelectModule} from "@angular/material/select";
 import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
@@ -24,6 +24,7 @@ export class AddTaskDialogComponent {
     readonly separatorKeysCodes = [ENTER, COMMA] as const;
     announcer = inject(LiveAnnouncer);
     addOnBlur = true;
+    public dialogRef = inject(MatDialogRef<AddTaskDialogComponent>);
     private readonly fb = inject(FormBuilder)
 
     constructor() {
@@ -78,4 +79,23 @@ export class AddTaskDialogComponent {
         }
     }
 
+
+    cancel(): void {
+        this.dialogRef.close();
+    }
+
+    save(): void {
+        if (this.taskForm.valid) {
+            const formData = {
+                id: new Date().toISOString(),
+                title: this.taskForm.value.title,
+                description: this.taskForm.value.description,
+                deadline: this.taskForm.value.deadline,
+                priority: this.taskForm.value.priority,
+                status: this.taskForm.value.status,
+                performers: this.taskForm.value.performers
+            };
+            this.dialogRef.close(formData);
+        }
+    }
 }
