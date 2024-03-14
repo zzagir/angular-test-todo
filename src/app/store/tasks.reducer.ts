@@ -48,11 +48,6 @@ const reducer = createReducer(
         isLoading: false,
         error: error
     })),
-    on(TasksActions.editTask, (state, {data}) => ({
-        ...state,
-        data: [data],
-        isLoading: false
-    })),
 )
 
 export function tasksReducer(state: State | undefined, action: Action) {
