@@ -1,11 +1,12 @@
 <mat-card class="task-card bg-custom-color">
   <mat-card-header>
-    <mat-card-title>{{ task?.title }}</mat-card-title>
-    <mat-card-subtitle>Deadline: {{ task?.deadline | date }}</mat-card-subtitle>
+    <mat-card-title>Название: {{ task?.title }}</mat-card-title>
+    <mat-card-subtitle>Дедлайн: {{ task?.deadline | date }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
+    <h3 class="mt-2 fw-medium">Описание задачи:</h3>
     <p>{{ task?.description }}</p>
-    <h3>Performers</h3>
+    <h3 class="fw-medium">Исполнители:</h3>
     <div class="d-flex gap-1 flex-wrap">
       <ng-container *ngFor="let performer of task?.performers; let index">
         <mat-chip-row>
@@ -18,10 +19,10 @@
     <div class="task-details">
       <span
         [ngClass]="{'low': task?.priority === 'Низкий', 'medium': task?.priority === 'Средний', 'high': task?.priority === 'Высокий'}"
-        class="priority">Priority: {{ task?.priority }}</span>
+        class="priority">Приоритет: {{ task?.priority }}</span>
       <span
         [ngClass]="{'distribution': task?.status === 'На распределении', 'in-progress': task?.status === 'В работе', 'done': task?.status === 'Готово'}"
-        class="status">Status: {{ task?.status }}</span>
+        class="status">Статус: {{ task?.status }}</span>
     </div>
   </mat-card-actions>
   <ng-container *ngIf="task">
