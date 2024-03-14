@@ -27,9 +27,6 @@ export class AddTaskDialogComponent {
     public dialogRef = inject(MatDialogRef<AddTaskDialogComponent>);
     private readonly fb = inject(FormBuilder)
 
-    constructor() {
-    }
-
     ngOnInit(): void {
         this.taskForm = this.fb.group({
             title: ['', Validators.required],

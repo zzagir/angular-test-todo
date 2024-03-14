@@ -1,0 +1,31 @@
+<mat-card class="task-card bg-custom-color">
+  <mat-card-header>
+    <mat-card-title>{{ task?.title }}</mat-card-title>
+    <mat-card-subtitle>Deadline: {{ task?.deadline | date }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ task?.description }}</p>
+    <h3>Performers</h3>
+    <div class="d-flex gap-1 flex-wrap">
+      <ng-container *ngFor="let performer of task?.performers; let index">
+        <mat-chip-row>
+          {{performer}}
+        </mat-chip-row>
+      </ng-container>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="task-details">
+      <span
+        [ngClass]="{'low': task?.priority === 'Низкий', 'medium': task?.priority === 'Средний', 'high': task?.priority === 'Высокий'}"
+        class="priority">Priority: {{ task?.priority }}</span>
+      <span
+        [ngClass]="{'distribution': task?.status === 'На распределении', 'in-progress': task?.status === 'В работе', 'done': task?.status === 'Готово'}"
+        class="status">Status: {{ task?.status }}</span>
+    </div>
+  </mat-card-actions>
+  <ng-container *ngIf="task">
+    <button (click)="openEditDialog(task)" mat-raised-button>Редактировать</button>
+  </ng-container>
+</mat-card>
+

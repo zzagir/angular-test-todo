@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Добавить задачу</h1>
+<h1 mat-dialog-title>Редактировать задачу</h1>
 <mat-dialog-content class="matdialog">
   <form [formGroup]="taskForm">
     <mat-form-field>
@@ -34,10 +34,10 @@
     <mat-form-field class="example-chip-list">
       <mat-label>Исполнители</mat-label>
       <mat-chip-grid #chipGrid aria-label="Enter performers">
-        <ng-container *ngFor="let performer of performers; let index">
+        <ng-container *ngFor="let performer of taskForm.value?.performers; let i = index">
           <mat-chip-row
             (edited)="edit(performer, $event)"
-            (removed)="remove(index)"
+            (removed)="remove(performer)"
             [aria-description]="'press enter to edit ' + performer"
             [editable]="true">
             {{performer}}
@@ -57,9 +57,8 @@
   </form>
 </mat-dialog-content>
 <div mat-dialog-actions>
-  <button (click)="save()" [disabled]="!taskForm.valid" [mat-dialog-close]="taskForm.value" color="primary"
-          mat-raised-button>
-    Добавить
+  <button (click)="save()" [disabled]="!taskForm.valid" [mat-dialog-close]="true" color="primary" mat-raised-button>
+    Сохранить
   </button>
-  <button (click)="cancel()" [mat-dialog-close]="false" mat-button>Отмена</button>
+  <button [mat-dialog-close]="false" mat-button>Отмена</button>
 </div>

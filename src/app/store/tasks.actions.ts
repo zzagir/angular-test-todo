@@ -27,3 +27,6 @@ export const addTaskFailure = createAction(
     props<{ error: any }>(),
 )
 
+export const editTask = createAction(
+    '[Tasks/Put] Edit Task', props<{ data: ITask }>()
+)

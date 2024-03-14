@@ -14,4 +14,8 @@ export class TasksFacade {
     addTask(data: ITask) {
         this.store.dispatch(TasksActions.addTask({data}));
     }
+
+    editTask(data: ITask) {
+        this.store.dispatch(TasksActions.editTask({data}));
+    }
 }

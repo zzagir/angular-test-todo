@@ -19,7 +19,7 @@ export const initialState: State = {
 const reducer = createReducer(
     initialState,
     on(TasksActions.getTasks, (state) => ({
-        data: null,
+        ...state,
         isLoading: true,
         error: null
     })),
@@ -47,6 +47,11 @@ const reducer = createReducer(
         ...state,
         isLoading: false,
         error: error
+    })),
+    on(TasksActions.editTask, (state, {data}) => ({
+        ...state,
+        data: [data],
+        isLoading: false
     })),
 )
 

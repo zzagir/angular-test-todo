@@ -1,4 +1,3 @@
-<button (click)="openAddTaskDialog()" mat-raised-button>Добавить задачу</button>
 <div class="container">
   <div class="row">
 
@@ -14,7 +13,7 @@
           class="example-list"
           id="todoList">
         <ng-container *ngFor="let item of todo; trackBy:itemTrackBy">
-          <div cdkDrag class="example-box">{{item.title}}</div>
+          <div [routerLink]="'task/'+item.id" cdkDrag class="example-box">{{item.title}}</div>
         </ng-container>
       </div>
     </div>
@@ -31,7 +30,8 @@
           class="example-list"
           id="atWorkList">
         <ng-container *ngFor="let item of atWork; trackBy:itemTrackBy">
-          <div cdkDrag class="example-box">{{item.title}}</div>
+          <div [routerLink]="'task/'+item.id" cdkDrag
+               class="example-box">{{item.title}}</div>
         </ng-container>
       </div>
     </div>
@@ -48,7 +48,7 @@
           class="example-list"
           id="doneList">
         <ng-container *ngFor="let item of done; trackBy:itemTrackBy">
-          <div cdkDrag class="example-box">{{item.title}}</div>
+          <div [routerLink]="'task/'+item.id" cdkDrag class="example-box">{{item.title}}</div>
         </ng-container>
       </div>
     </div>

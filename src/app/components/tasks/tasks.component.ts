@@ -9,8 +9,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import {ITask} from "../../store/tasks.models";
 import {MatButtonModule} from "@angular/material/button";
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
-import {AddTaskDialogComponent} from "../ui/add-task-dialog/add-task-dialog.component";
+import {MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatNativeDateModule} from "@angular/material/core";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {TasksFacade} from "../../store/tasks.facade";
@@ -18,12 +17,14 @@ import {select, Store} from "@ngrx/store";
 import {tasksDataSelector} from "../../store/tasks.selectors";
 import {map, Observable, Subject, takeUntil} from "rxjs";
 import {TasksService} from "../../service/tasks.service";
+import {EditTaskDialogComponent} from "../ui/edit-task-dialog/edit-task-dialog.component";
+import {RouterLink} from "@angular/router";
 
 
 @Component({
     selector: 'app-tasks',
     standalone: true,
-    imports: [CommonModule, CdkDropList, CdkDrag, MatButtonModule, MatDialogModule, MatNativeDateModule],
+    imports: [CommonModule, CdkDropList, CdkDrag, MatButtonModule, MatDialogModule, MatNativeDateModule, RouterLink],
     templateUrl: './tasks.component.html',
     styleUrls: ['./tasks.component.scss']
 })
@@ -33,15 +34,10 @@ export class TasksComponent implements OnInit, OnDestroy {
     atWork: ITask[] = [];
     done: ITask[] = [];
     private destroy$ = new Subject<void>()
-    private task!: ITask
     private readonly store = inject(Store)
-    private readonly tasksFacade = inject(TasksFacade)
-    private readonly destroyRef = inject(DestroyRef);
-    private readonly dialog = inject(MatDialog)
     private readonly apiService = inject(TasksService)
 
     ngOnInit(): void {
-        this.tasksFacade.init()
         this.tasks$ = this.store.pipe(select(tasksDataSelector))
         this.initializeValues()
     }
@@ -83,9 +79,6 @@ export class TasksComponent implements OnInit, OnDestroy {
                     break
                 }
             }
-            console.log("Todo list: ", this.todo)
-            console.log("At work list: ", this.atWork)
-            console.log("Done list: ", this.done)
             transferArrayItem(
                 event.previousContainer.data,
                 event.container.data,
@@ -97,28 +90,5 @@ export class TasksComponent implements OnInit, OnDestroy {
 
     itemTrackBy(index: number, item: ITask) {
         return item.id
-    }
-
-    openAddTaskDialog(): void {
-        const dialogRef = this.dialog.open(AddTaskDialogComponent, {
-            width: '250px'
-        });
-        dialogRef.afterClosed()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(result => {
-                if (result) {
-                    const newTaskData = {
-                        id: Number(new Date()),
-                        title: result.title,
-                        description: result.description,
-                        deadline: result.deadline,
-                        priority: result.priority,
-                        status: result.status,
-                        performers: result.performers
-                    };
-                    this.tasksFacade.addTask(newTaskData)
-                }
-                console.log('The dialog was closed', result);
-            })
     }
 }
